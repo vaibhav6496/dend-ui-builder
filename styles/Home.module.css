@@ -135,16 +135,31 @@
 }
 
 .sidebar {
-  background-color: grey;
+  background-color: #4B4746 ;
   padding: 0;
   width: 100%;
   height: 100%;
 }
 
 .menuitem {
+  color: white;
+  cursor: move;
   align-self: center;
   text-align: center;
+  vertical-align: middle;
   margin: auto;
+  height: 30px;
+}
+
+.menuitem:hover {
+  color: black;
+  background-color: #EAE1DE;
+  cursor: move;
+  align-self: center;
+  text-align: center;
+  vertical-align: middle;
+  margin: auto;
+  height: 30px;
 }
 
 @media (max-width: 600px) {

@@ -1,65 +1,45 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useContext } from "react"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navbar, Nav, Row, Col, Button }  from 'react-bootstrap'
+import SideBar from '../components/SideBar'
+import Canvas from '../components/Canvas'
+import styles from "../styles/Home.module.css";
+import { store } from "../hooks/ComponentContext"
 
 export default function Home() {
+  const globalState = useContext(store);
+  const handleSave = (e) => {
+    console.log('Make an API call to save with following component:', globalState["state"])
+  }
+  const handleReset = (e) => {
+    localStorage.clear()
+    location.reload()
+  }
+  console.log(globalState);
   return (
-    <div className={styles.container}>
+    <div id="next">
       <Head>
-        <title>Create Next App</title>
+        <title>UI Builder</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      <Navbar bg="dark" variant="dark" fluid>
+        <Navbar.Brand href="#home">UI-Builder</Navbar.Brand>
+        <Navbar.Collapse>
+          <Nav.Item className="ml-auto">
+            <Row>
+              <Col><Button onClick={handleSave} disabled={Object.keys(globalState["state"]).length === 0 && globalState["state"].constructor === Object}>Save</Button></Col>
+              <Col><Button onClick={handleReset} disabled={Object.keys(globalState["state"]).length === 0 && globalState["state"].constructor === Object}>Reset</Button></Col>
+            </Row>
+          </Nav.Item>
+        </Navbar.Collapse>
+      </Navbar>
+      <div className={styles.page}>
+        <Row className={styles.row}>
+          <Col md={2} className={styles.col}><SideBar /></Col>
+          <Col md={10} className={styles.col}><Canvas /></Col>
+        </Row>
+      </div>
     </div>
   )
 }
